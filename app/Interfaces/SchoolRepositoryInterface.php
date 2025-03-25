@@ -13,4 +13,5 @@ interface SchoolRepositoryInterface
     public function update(School $school, Request $request);
     public function delete(School $school);
     public function getRelatedData();
+    public function getSchoolsByLoginId($loginId);
 }

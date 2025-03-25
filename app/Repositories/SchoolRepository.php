@@ -11,12 +11,19 @@ use App\Models\City;
 use App\Models\Standard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Interfaces\SchoolRepositoryInterface;
 
 class SchoolRepository implements SchoolRepositoryInterface
 {
+    protected $school;
+    
+    public function __construct(School $school)
+    {
+        $this->school = $school;
+    }
     public function all()
     {
-        return School::with(['state', 'district', 'city', 'students'])->get();
+        return School::all();
     }
 
     public function find($id)
@@ -35,7 +42,6 @@ class SchoolRepository implements SchoolRepositoryInterface
             'establishment_date' => 'required|date',
             'contact_number' => 'required|digits:10',
             'login_id' => 'required|string|unique:schools,login_id|max:255',
-            'password' => 'required|string|min:8',
             'photos.*' => 'nullable|image|max:2048',
             'students.*.name' => 'required|string|max:255',
             'students.*.standard_id' => 'required|exists:standards,id',
@@ -81,7 +87,6 @@ class SchoolRepository implements SchoolRepositoryInterface
             'establishment_date' => 'required|date',
             'contact_number' => 'required|digits:10',
             'login_id' => 'required|string|unique:schools,login_id,' . $school->id . '|max:255',
-            'password' => 'nullable|string|min:8',
             'photos.*' => 'nullable|image|max:2048',
             'students.*.name' => 'required|string|max:255',
             'students.*.standard_id' => 'required|exists:standards,id',
@@ -114,5 +119,10 @@ class SchoolRepository implements SchoolRepositoryInterface
             'states' => State::all(),
             'standards' => Standard::all(),
         ];
+    }
+    
+    public function getSchoolsByLoginId($loginId)
+    {
+        return $this->school->where('login_id', $loginId)->get(); 
     }
 }

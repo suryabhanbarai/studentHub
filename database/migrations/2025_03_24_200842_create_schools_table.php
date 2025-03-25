@@ -20,7 +20,8 @@ class CreateSchoolsTable extends Migration
             $table->foreignId('city_id')->constrained()->onDelete('restrict');
             $table->date('establishment_date');
             $table->string('contact_number', 15);
-            $table->string('login_id');
+            $table->foreignId('login_id')->constrained('users')->onDelete('cascade');
+            $table->string('password');
             $table->timestamps();
         });
     }

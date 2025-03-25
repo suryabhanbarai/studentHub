@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\SchoolRepositoryInterface;
+use App\Interfaces\SchoolRepositoryInterface;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
