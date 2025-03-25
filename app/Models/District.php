@@ -8,6 +8,7 @@ use App\Models\State;
 
 class District extends Model
 {
+    protected $hidden = ['created_at', 'updated_at']; // Hide timestamps
     public function state()
     {
         return $this->belongsTo(State::class);

@@ -23,7 +23,7 @@ class SchoolRepository implements SchoolRepositoryInterface
     }
     public function all()
     {
-        return School::all();
+        return School::simplePaginate(10);
     }
 
     public function find($id)

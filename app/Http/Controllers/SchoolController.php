@@ -19,6 +19,7 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = $this->schoolRepository->all();
+
         return view('schools.index', compact('schools'));
     }
 
