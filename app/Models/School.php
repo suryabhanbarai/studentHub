@@ -11,7 +11,7 @@ class School extends Model
 {
     protected $fillable = [
         'name', 'address', 'state_id', 'district_id', 'city_id',
-        'establishment_date', 'contact_number', 'login_id', 'password'
+        'establishment_date', 'contact_number', 'login_id'
     ];
 
     public function photos()
