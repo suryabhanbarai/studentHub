@@ -26,7 +26,10 @@ class SchoolController extends Controller
     public function create()
     {
         $data = $this->schoolRepository->getRelatedData();
-        return view('schools.create', $data);
+        
+        $states = \App\Models\State::all();
+        $standards = \App\Models\Standard::all();
+        return view('schools.create', compact('states', 'standards'));
     }
 
     public function store(Request $request)

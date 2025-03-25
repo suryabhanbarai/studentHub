@@ -13,7 +13,8 @@
                 <tr class="bg-gray-200">
                     <th class="border border-gray-400 px-4 py-2">ID</th>
                     <th class="border border-gray-400 px-4 py-2">Name</th>
-                    <th class="border border-gray-400 px-4 py-2">City Details</th>
+                    <th class="border border-gray-400 px-4 py-2">Address</th>
+                    <th class="border border-gray-400 px-4 py-2">Contact Number</th>
                     <th class="border border-gray-400 px-4 py-2">Actions</th>
                 </tr>
             </thead>
@@ -22,7 +23,8 @@
                     <tr>
                         <td class="border border-gray-400 px-4 py-2">{{ $school->id }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $school->name }}</td>
-                        <td class="border border-gray-400 px-4 py-2">{{ $school->city }}</td>
+                        <td class="border border-gray-400 px-4 py-2">{{ $school->address }}</td>
+                        <td class="border border-gray-400 px-4 py-2">{{ $school->contact_number }}</td>
                         <td class="border border-gray-400 px-4 py-2">
                             <a href="{{ route('schools.edit', $school->id) }}" class="text-blue-500">Edit</a> | 
                             <form action="{{ route('schools.destroy', $school->id) }}" method="POST" style="display:inline;">

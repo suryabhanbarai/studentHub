@@ -12,6 +12,7 @@ use App\Models\Standard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Interfaces\SchoolRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class SchoolRepository implements SchoolRepositoryInterface
 {
@@ -41,7 +42,6 @@ class SchoolRepository implements SchoolRepositoryInterface
             'city_id' => 'required|exists:cities,id',
             'establishment_date' => 'required|date',
             'contact_number' => 'required|digits:10',
-            'login_id' => 'required|string|unique:schools,login_id|max:255',
             'photos.*' => 'nullable|image|max:2048',
             'students.*.name' => 'required|string|max:255',
             'students.*.standard_id' => 'required|exists:standards,id',
@@ -50,8 +50,17 @@ class SchoolRepository implements SchoolRepositoryInterface
             'students.*.photo' => 'nullable|image|max:2048',
         ]);
 
-        $school = School::create($validated);
-
+        // Create the school record with user_id
+        $school = School::create([
+            'name' => $validated['name'],
+            'address' => $validated['address'],
+            'state_id' => $validated['state_id'],
+            'district_id' => $validated['district_id'],
+            'city_id' => $validated['city_id'],
+            'establishment_date' => $validated['establishment_date'],
+            'contact_number' => $validated['contact_number'],
+            'login_id' => Auth::id()
+        ]);
         // Handle school photos
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -86,7 +95,6 @@ class SchoolRepository implements SchoolRepositoryInterface
             'city_id' => 'required|exists:cities,id',
             'establishment_date' => 'required|date',
             'contact_number' => 'required|digits:10',
-            'login_id' => 'required|string|unique:schools,login_id,' . $school->id . '|max:255',
             'photos.*' => 'nullable|image|max:2048',
             'students.*.name' => 'required|string|max:255',
             'students.*.standard_id' => 'required|exists:standards,id',
@@ -97,7 +105,6 @@ class SchoolRepository implements SchoolRepositoryInterface
 
         $school->update($validated);
 
-        // Handle photos and students updates (simplified for brevity; you can expand this logic)
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('school_photos', 'public');
